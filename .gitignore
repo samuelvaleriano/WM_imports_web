@@ -36,3 +36,10 @@ Desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Arquivos de variáveis de ambiente
+.env
+.env.development
+.env.production
+.env.local
+*.env

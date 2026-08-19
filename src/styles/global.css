@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: #FFFFFF;
+  --color-surface: #637081;
+  --color-primary: #92140C;
+  --colo-secondary: #09864A;
+  --color-text: #000000;
+  --color-text-secondary: #ffffff;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
