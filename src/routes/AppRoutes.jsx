@@ -1,14 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import  HomePage  from '../pages/HomePage/HomePage.jsx';
-import  CreatePage  from '../pages/CreatePage/CreatePage.jsx';
-import  DetailsPage from '../pages/DetailsPage/DetailsPage.jsx';
-import  ErrorPage from '../pages/ErrorPage/ErrorPage.jsx';
-
-// Páginas futuras do e-commerce 
-// import { CatalogPage } from '../pages/CatalogPage/CatalogPage.jsx';
-// import { CartPage } from '../pages/CartPage/CartPage.jsx';
-// import { CheckoutPage } from '../pages/CheckoutPage/CheckoutPage.jsx';
-// import { DashboardPage } from '../pages/Admin/DashboardPage/DashboardPage.jsx';
+import HomePage from '../pages/HomePage/HomePage.jsx';
+import CreatePage from '../pages/CreatePage/CreatePage.jsx';
+import DetailsPage from '../pages/DetailsPage/DetailsPage.jsx';
+import ErrorPage from '../pages/ErrorPage/ErrorPage.jsx';
+import CatalogPage from '../pages/CatalogPage/CatalogPage.jsx';
 
 const router = createBrowserRouter([
   // =========================================================================
@@ -25,35 +20,32 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   
-  // Rotas Dinâmicas de Catálogo (Menu & Subcategorias)
+  // Rotas Dinâmicas de Catálogo
   {
     path: "/catalogo",
-    element: <HomePage />, // Substituir por <CatalogPage />
+    element: <CatalogPage />,
   },
   {
     path: "/catalogo/:categoria", 
-    // Ex: /catalogo/brasileiros | /catalogo/internacionais | /catalogo/selecoes
-    element: <HomePage />, // Substituir por <CatalogPage />
+    element: <CatalogPage />,
   },
   {
     path: "/catalogo/:categoria/:subcategoria", 
-    // Ex: /catalogo/brasileiros/rio-de-janeiro | /catalogo/internacionais/premier-league
-    element: <HomePage />, // Substituir por <CatalogPage />
+    element: <CatalogPage />,
   },
   {
     path: "/catalogo/:categoria/:subcategoria/:time", 
-    // Ex: /catalogo/brasileiros/rio-de-janeiro/flamengo
-    element: <HomePage />, // Substituir por <CatalogPage />
+    element: <CatalogPage />,
   },
 
   // Fluxo de Compra e Autenticação
   {
     path: "/carrinho",
-    element: <HomePage />, // Substituir por <CartPage />
+    element: <HomePage />,
   },
   {
     path: "/checkout",
-    element: <HomePage />, // Substituir por <CheckoutPage />
+    element: <HomePage />,
   },
   {
     path: "/login",
@@ -61,27 +53,27 @@ const router = createBrowserRouter([
   },
 
   // =========================================================================
-  // 2. ROTAS ADMINISTRATIVAS (DASHBOARD DA LOJA)
+  // 2. ROTAS ADMINISTRATIVAS
   // =========================================================================
   {
     path: "/admin",
-    element: <HomePage />, // Visão geral / Métricas de vendas (DashboardPage)
+    element: <HomePage />,
   },
   {
     path: "/admin/produtos",
-    element: <HomePage />, // Tabela de listagem e gerenciamento de produtos
+    element: <HomePage />,
   },
   {
     path: "/admin/produtos/novo",
-    element: <CreatePage />, // Cadastro de produto
+    element: <CreatePage />,
   },
   {
     path: "/admin/produtos/editar/:id",
-    element: <CreatePage />, // Edição de produto
+    element: <CreatePage />,
   },
   {
     path: "/admin/pedidos",
-    element: <HomePage />, // Gerenciamento de pedidos recebidos
+    element: <HomePage />,
   },
 
   {
