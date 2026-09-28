@@ -4,6 +4,8 @@ import CreatePage from '../pages/CreatePage/CreatePage.jsx';
 import DetailsPage from '../pages/DetailsPage/DetailsPage.jsx';
 import ErrorPage from '../pages/ErrorPage/ErrorPage.jsx';
 import CatalogPage from '../pages/CatalogPage/CatalogPage.jsx';
+import { Login } from '../pages/Login/Login.jsx';
+import { Register } from '../pages/Register/Register.jsx';
 
 const router = createBrowserRouter([
   // =========================================================================
@@ -49,7 +51,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <HomePage />, 
+    element: <Login />, 
+  },
+  {
+    path: "/cadastro",
+    element: <Register />, 
   },
 
   // =========================================================================
