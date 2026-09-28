@@ -16,7 +16,7 @@ export default function HomePage() {
   useEffect(() => {
     async function carregarProdutos() {
       try {
-        const response = await api.get('/api/v1/produtos/');
+        const response = await api.get("http://127.0.0.1:8000/api/v1/produtos/");
         setProdutos(response.data);
       } catch (err) {
         console.error('Erro ao conectar com a API:', err);
