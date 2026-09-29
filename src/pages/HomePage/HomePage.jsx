@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../services/api.js";
 import { TeamCategorySelector } from "../../components/TeamCategorySelector/TeamCategorySelector";
 import HeroBanner from "../../components/HeroBanner/HeroBanner.jsx";
-import Header from "../../components/Header/Header.jsx";
+import { Header } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer.jsx";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import styles from "./HomePage.module.css";

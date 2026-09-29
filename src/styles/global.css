@@ -3,22 +3,34 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-:root {
-  --color-bg: #FFFFFF;
-  --color-surface: #637081;
-  --color-primary: #92140C;
-  --colo-secondary: #09864A;
-  --color-text: #000000;
-  --color-text-secondary: #ffffff;
-  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+main {
+  padding-top: 60px; /* Substitua 80px pela altura exata do seu Header */
 }
 
+:root {
+  /* Fondos del sitio */
+  --bg-main: #0b0f12;
+  --bg-radial: radial-gradient(circle at 50% 20%, #112822 0%, #0b0f12 65%);
+  --bg-card: rgba(15, 23, 26, 0.85);
+  --bg-card-solid: #121b18;
+
+  /* Color principal de acento (Verde Neón WM IMPORTS) */
+  --color-primary: #00e58b;
+  --color-primary-hover: #00ff9d;
+
+  /* Bordes y líneas decorativas */
+  --border-neon: rgba(0, 229, 139, 0.25);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+
+  /* Textos */
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+}
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-main);
+  background: var(--bg-radial) !important;
+  color: var(--text-primary);
   min-height: 100vh;
+  margin: 0;
 }
 
 a {
