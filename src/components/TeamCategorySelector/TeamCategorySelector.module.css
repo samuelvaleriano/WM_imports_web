@@ -1,58 +1,135 @@
 .wrapper {
   width: 100%;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }
+
+/* Título de Seção */
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Container de Abas / Pílulas de Filtro */
+.tabsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Botões de Aba (Mantém font-weight fixo para evitar reflow de largura) */
+.tabButton {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.5rem 1.6rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.tabButton:hover {
+  color: #ffffff;
+  border-color: rgba(0, 229, 139, 0.5);
+  background-color: rgba(0, 229, 139, 0.08);
+}
+
+/* Botão de Aba Ativo */
+.activeTab {
+  background-color: #00e58b;
+  color: #0b0f12;
+  border-color: #00e58b;
+  box-shadow: 0 0 16px rgba(0, 229, 139, 0.35);
+}
+
+.activeTab:hover {
+  background-color: #00ff9d;
+  border-color: #00ff9d;
+}
+
+/* Container de Carrossel com Altura Mínima Fixa (Evita que o layout encolha) */
 .carouselContainer {
   width: 100%;
+  min-height: 160px;
   overflow: hidden;
   position: relative;
-  padding: 15px 0;
-  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-  user-select: none; 
+  padding: 12px 0;
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  user-select: none;
+  opacity: 1;
+  transition: opacity 0.15s ease-in-out;
 }
 
+/* Estado de Transição ao Trocar de Categoria */
+.switching {
+  opacity: 0;
+  pointer-events: none;
+}
 
+/* Trilho do Carrossel */
 .carouselTrack {
   display: flex;
   gap: 20px;
   width: max-content;
   will-change: transform;
-  cursor: grab; 
-  touch-action: pan-y; 
+  cursor: grab;
+  touch-action: pan-y;
+  /* IMPORTANTE: NUNCA colocar transition: transform aqui para não conflitar com o RAF */
 }
 
+.carouselTrack:active {
+  cursor: grabbing;
+}
+
+/* Card Individual de Time */
 .teamCard {
   min-width: 120px;
   width: 120px;
-  height: 130px;
+  height: 135px;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgba(18, 27, 24, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 229, 139, 0.15);
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px;
+  gap: 10px;
+  padding: 12px 8px;
   cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
   user-select: none;
+  box-sizing: border-box;
 }
 
 .teamCard:hover {
-  transform: translateY(-4px);
-  border-color: #00e5a3;
-  background: rgba(0, 229, 163, 0.08);
+  transform: translateY(-6px);
+  border-color: #00e58b;
+  background: rgba(0, 229, 139, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 229, 139, 0.22);
 }
 
 .imageWrapper {
-  width: 55px;
-  height: 55px;
+  width: 58px;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,6 +141,12 @@
   max-height: 100%;
   object-fit: contain;
   pointer-events: none;
+  filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.5));
+  transition: transform 0.25s ease;
+}
+
+.teamCard:hover .crestImage {
+  transform: scale(1.08);
 }
 
 .teamName {
@@ -75,116 +158,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  pointer-events: none;
-}
-.sectionTitle {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #032b26;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 1.25rem;
-  text-align: center;
-}
-
-.tabsContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 2.5rem;
-  flex-wrap: nowrap;
-}
-
-.tabButton {
-  background-color: transparent;
-  color: #032b26;
-  border: 2px solid #032b26;
-  padding: 0.45rem 1.5rem;
-  border-radius: 9999px;
-  font-size: 0.95rem;
-  font-weight: 800;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease-in-out;
-}
-
-.tabButton:hover {
-  background-color: rgba(3, 43, 38, 0.05);
-}
-
-.activeTab {
-  background-color: #012923;
-  color: #00e5a3;
-  border-color: #012923;
-}
-
-.activeTab:hover {
-  background-color: #012923;
-}
-
-.teamsGrid {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  gap: 2.5rem;
-  width: 100%;
-  max-width: 1200px;
-  overflow-x: auto;
-  padding: 0.5rem 1rem;
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
-}
-
-.teamsGrid::-webkit-scrollbar {
-  display: none;
-}
-
-.teamCard {
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  cursor: pointer;
-  padding: 0;
-  flex-shrink: 0;
-  min-width: 90px;
-  transition: transform 0.2s ease;
-}
-
-.teamCard:hover {
-  transform: translateY(-4px);
-}
-
-.imageWrapper {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.75rem;
-}
-
-.crestImage {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.08));
-}
-
-.teamName {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #111827;
-  text-transform: uppercase;
   letter-spacing: 0.03em;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .teamsGrid {
-    justify-content: safe center;
-  }
+  pointer-events: none;
 }

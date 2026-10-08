@@ -8,7 +8,6 @@ const TIMES_POR_CATEGORIA = {
     { id: 'algeria', nome: 'ARGÉLIA', escudoUrl: '/escudos/algeria.png.png' },
     { id: 'arabia-saudita', nome: 'ARÁBIA SAUDITA', escudoUrl: '/escudos/arabia_saudita.png.png' },
     { id: 'argentina', nome: 'ARGENTINA', escudoUrl: '/escudos/argentina.png.png' },
-    { id: 'argentina-webp', nome: 'ARGENTINA', escudoUrl: '/escudos/argentina.webp' },
     { id: 'asia', nome: 'ÁSIA', escudoUrl: '/escudos/asia.png.png' },
     { id: 'australia', nome: 'AUSTRÁLIA', escudoUrl: '/escudos/australia.png.png' },
     { id: 'belgica', nome: 'BÉLGICA', escudoUrl: '/escudos/belgica.png.png' },
@@ -74,45 +73,20 @@ const TIMES_POR_CATEGORIA = {
     { id: 'boca-juniors', nome: 'BOCA JUNIORS', escudoUrl: '/escudos/boca_juniors.png.png' },
     { id: 'borussia-dortmund', nome: 'BORUSSIA DORTMUND', escudoUrl: '/escudos/borussia_dortmund.png.png' },
     { id: 'bundesliga', nome: 'BUNDESLIGA', escudoUrl: '/escudos/bundesliga.png.png' },
-    { id: 'cerro-porteno', nome: 'CERRO PORTEÑO', escudoUrl: '/escudos/cerro_porteno.png.png' },
     { id: 'chelsea', nome: 'CHELSEA', escudoUrl: '/escudos/chelsea.png.png' },
-    { id: 'colo-colo', nome: 'COLO-COLO', escudoUrl: '/escudos/colo_colo.png.png' },
-    { id: 'fiorentina', nome: 'FIORENTINA', escudoUrl: '/escudos/fiorentina.png.png' },
     { id: 'inter-milan', nome: 'INTER DE MILÃO', escudoUrl: '/escudos/inter_milan.png.png' },
     { id: 'juventus', nome: 'JUVENTUS', escudoUrl: '/escudos/juventus.png.png' },
     { id: 'laliga', nome: 'LA LIGA', escudoUrl: '/escudos/laliga.png.png' },
-    { id: 'lazio', nome: 'LAZIO', escudoUrl: '/escudos/lazio.png.png' },
-    { id: 'ligue-1', nome: 'LIGUE 1', escudoUrl: '/escudos/ligue_1.png.png' },
-    { id: 'lyon', nome: 'LYON', escudoUrl: '/escudos/lyon.pnglyon.png.png' },
     { id: 'manchester-city', nome: 'MANCHESTER CITY', escudoUrl: '/escudos/manchester_city.png.png' },
     { id: 'manchester-united', nome: 'MANCHESTER UNITED', escudoUrl: '/escudos/manchester_united.png.png' },
-    { id: 'marseille', nome: 'MARSEILLE', escudoUrl: '/escudos/marseille.png.png' },
     { id: 'milan', nome: 'MILAN', escudoUrl: '/escudos/milan.png.png' },
-    { id: 'monaco', nome: 'MÔNACO', escudoUrl: '/escudos/monaco.png.png' },
-    { id: 'nacional', nome: 'NACIONAL', escudoUrl: '/escudos/nacional.png.png' },
     { id: 'napoli', nome: 'NÁPOLI', escudoUrl: '/escudos/napoli.png.png' },
-    { id: 'newcastle', nome: 'NEWCASTLE', escudoUrl: '/escudos/newcastle.png.png' },
-    { id: 'penarol', nome: 'PEÑAROL', escudoUrl: '/escudos/penarol.png.png' },
     { id: 'premier-league', nome: 'PREMIER LEAGUE', escudoUrl: '/escudos/Premier-League.png_v=1755197528&width=80.png' },
     { id: 'psg', nome: 'PSG', escudoUrl: '/escudos/psg.png.png' },
-    { id: 'rb-leipzig', nome: 'RB LEIPZIG', escudoUrl: '/escudos/rb_leipzig.png.png' },
     { id: 'real-madrid', nome: 'REAL MADRID', escudoUrl: '/escudos/real_madrid.png.png' },
-    { id: 'real-sociedad', nome: 'REAL SOCIEDAD', escudoUrl: '/escudos/real_sociedad.png.png' },
     { id: 'river-plate', nome: 'RIVER PLATE', escudoUrl: '/escudos/river_plate.png.png' },
     { id: 'roma', nome: 'ROMA', escudoUrl: '/escudos/roma.png.png' },
-    { id: 'sevilla', nome: 'SEVILLA', escudoUrl: '/escudos/sevilla.png.png' },
     { id: 'tottenham', nome: 'TOTTENHAM', escudoUrl: '/escudos/tottenham.png.png' },
-    { id: 'universitario', nome: 'UNIVERSITARIO', escudoUrl: '/escudos/universitario.png.png' },
-    { id: 'valencia', nome: 'VALENCIA', escudoUrl: '/escudos/valencia.pngvalencia.png.png' },
-    { id: 'venezia', nome: 'VENEZIA', escudoUrl: '/escudos/venezia.png.png' },
-    { id: 'villarreal', nome: 'VILLARREAL', escudoUrl: '/escudos/villarreal.png.png' },
-    { id: 'west-ham', nome: 'WEST HAM', escudoUrl: '/escudos/west_ham.png.png' },
-    { id: 'wolverhampton', nome: 'WOLVERHAMPTON', escudoUrl: '/escudos/wolverhampton.png.png' },
-    { id: 'gringa-83', nome: 'GRINGA', escudoUrl: '/escudos/gringa_83.png_v=1770210001&width=80.png' },
-    { id: 'r6aqiuf', nome: 'LIVERPOOL', escudoUrl: '/escudos/liverpool.png.png' },
-    { id: 'r9vpcyp', nome: 'MANCHESTER CITY', escudoUrl: '/escudos/manchester_city.png.png' },
-    { id: 'rkluzf8', nome: 'CHELSEA', escudoUrl: '/escudos/chelsea.png.png' },
-    { id: 'rv3jftj', nome: 'ARSENAL', escudoUrl: '/escudos/arsenal.png.png' },
   ],
 };
 
@@ -124,6 +98,7 @@ const CATEGORIAS = [
 
 export function TeamCategorySelector() {
   const [categoriaAtiva, setCategoriaAtiva] = useState('selecoes');
+  const [isSwitching, setIsSwitching] = useState(false);
   const navigate = useNavigate();
 
   const trackRef = useRef(null);
@@ -137,12 +112,21 @@ export function TeamCategorySelector() {
   const timesAtuais = TIMES_POR_CATEGORIA[categoriaAtiva] || [];
   const timesDuplicados = [...timesAtuais, ...timesAtuais];
 
-  useEffect(() => {
-    positionRef.current = 0;
-    if (trackRef.current) {
-      trackRef.current.style.transform = `translateX(0px)`;
-    }
-  }, [categoriaAtiva]);
+  // Função para trocar de categoria suavemente
+  const handleCategoryChange = (novaCategoria) => {
+    if (novaCategoria === categoriaAtiva || isSwitching) return;
+    
+    setIsSwitching(true);
+
+    setTimeout(() => {
+      setCategoriaAtiva(novaCategoria);
+      positionRef.current = 0;
+      if (trackRef.current) {
+        trackRef.current.style.transform = `translateX(0px)`;
+      }
+      setIsSwitching(false);
+    }, 150);
+  };
 
   useEffect(() => {
     const track = trackRef.current;
@@ -152,7 +136,7 @@ export function TeamCategorySelector() {
     const speed = 0.4;
 
     const animate = () => {
-      if (!isHoveredRef.current && !isDraggingRef.current) {
+      if (!isHoveredRef.current && !isDraggingRef.current && !isSwitching) {
         positionRef.current -= speed;
         const halfWidth = track.scrollWidth / 2;
 
@@ -169,9 +153,10 @@ export function TeamCategorySelector() {
     animate();
 
     return () => cancelAnimationFrame(animationId);
-  }, [categoriaAtiva, timesAtuais.length]);
+  }, [categoriaAtiva, timesAtuais.length, isSwitching]);
 
   const handlePointerDown = (e) => {
+    if (isSwitching) return;
     isDraggingRef.current = true;
     hasMovedRef.current = false;
     startXRef.current = e.clientX;
@@ -179,7 +164,7 @@ export function TeamCategorySelector() {
   };
 
   const handlePointerMove = (e) => {
-    if (!isDraggingRef.current) return;
+    if (!isDraggingRef.current || isSwitching) return;
 
     const deltaX = e.clientX - startXRef.current;
 
@@ -212,8 +197,7 @@ export function TeamCategorySelector() {
   };
 
   const handleTimeClick = (timeId) => {
-    if (hasMovedRef.current) return;
-
+    if (hasMovedRef.current || isSwitching) return;
     navigate(`/produtos?time=${timeId}`);
   };
 
@@ -221,20 +205,22 @@ export function TeamCategorySelector() {
     <section className={styles.wrapper}>
       <h2 className={styles.sectionTitle}>SELECIONE POR TIME</h2>
 
+      {/* TABS DE CATEGORIAS */}
       <div className={styles.tabsContainer}>
         {CATEGORIAS.map((cat) => (
           <button
             key={cat.id}
             type="button"
             className={`${styles.tabButton} ${categoriaAtiva === cat.id ? styles.activeTab : ''}`}
-            onClick={() => setCategoriaAtiva(cat.id)}
+            onClick={() => handleCategoryChange(cat.id)}
           >
             {cat.label}
           </button>
         ))}
       </div>
 
-      <div className={styles.carouselContainer}>
+      {/* CARROSSEL INFINITO COM DRAG E TRANSITION SMOOTH */}
+      <div className={`${styles.carouselContainer} ${isSwitching ? styles.switching : ''}`}>
         <div
           className={styles.carouselTrack}
           ref={trackRef}
