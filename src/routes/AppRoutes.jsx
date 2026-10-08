@@ -7,6 +7,9 @@ import CatalogPage from '../pages/CatalogPage/CatalogPage.jsx';
 import { Login } from '../pages/Login/Login.jsx';
 import { Register } from '../pages/Register/Register.jsx';
 
+
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.jsx';
+
 const router = createBrowserRouter([
   // =========================================================================
   // 1. ROTAS PÚBLICAS DA LOJA
@@ -46,10 +49,6 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "/checkout",
-    element: <HomePage />,
-  },
-  {
     path: "/login",
     element: <Login />, 
   },
@@ -59,29 +58,48 @@ const router = createBrowserRouter([
   },
 
   // =========================================================================
-  // 2. ROTAS ADMINISTRATIVAS
+  // 2. ROTAS PROTEGIDAS DO CLIENTE (Exige estar logado)
   // =========================================================================
   {
-    path: "/admin",
-    element: <HomePage />,
-  },
-  {
-    path: "/admin/produtos",
-    element: <HomePage />,
-  },
-  {
-    path: "/admin/produtos/novo",
-    element: <CreatePage />,
-  },
-  {
-    path: "/admin/produtos/editar/:id",
-    element: <CreatePage />,
-  },
-  {
-    path: "/admin/pedidos",
-    element: <HomePage />,
+    path: "/checkout",
+    element: (
+      <ProtectedRoute>
+        <HomePage />
+      </ProtectedRoute>
+    ),
   },
 
+  // =========================================================================
+  // 3. ROTAS ADMINISTRATIVAS (Exige estar logado e perfil 'admin')
+  // =========================================================================
+  {
+    element: <ProtectedRoute allowedRoles={['admin']} />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/admin",
+        element: <HomePage />,
+      },
+      {
+        path: "/admin/produtos",
+        element: <HomePage />,
+      },
+      {
+        path: "/admin/produtos/novo",
+        element: <CreatePage />,
+      },
+      {
+        path: "/admin/produtos/editar/:id",
+        element: <CreatePage />,
+      },
+      {
+        path: "/admin/pedidos",
+        element: <HomePage />,
+      },
+    ],
+  },
+
+  // Rota de Erro 404
   {
     path: "*",
     element: <ErrorPage />,

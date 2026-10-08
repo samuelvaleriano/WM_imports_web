@@ -1,16 +1,21 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { authService } from "../../services/authService";
+import { useAuth } from "../../context/AuthContext";
 import styles from "./Login.module.css";
 
 export function Login({ onSuccess, onNavigateToRegister }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth(); 
 
   const [formData, setFormData] = useState({ email: "", senha: "" });
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,11 +39,28 @@ export function Login({ onSuccess, onNavigateToRegister }) {
 
     setLoading(true);
     try {
-      await authService.login(formData.email, formData.senha);
-      if (onSuccess) {
-        onSuccess();
+
+      const response = await authService.login(formData.email, formData.senha);
+
+
+      const jwtToken = response?.access_token || response?.token;
+
+      const userData = response?.user || response?.usuario || {
+        email: formData.email,
+        nome: response?.nome || formData.email.split("@")[0]
+      };
+
+      if (jwtToken) {
+
+        login(userData, jwtToken);
+
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          navigate(from, { replace: true });
+        }
       } else {
-        navigate("/");
+        setApiError("Não foi possível recuperar o token de acesso da API.");
       }
     } catch (err) {
       const msg =
