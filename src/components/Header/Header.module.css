@@ -132,6 +132,53 @@
   box-shadow: 0 2px 6px rgba(225, 29, 72, 0.4);
 }
 
+.userArea {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+}
+
+.userName strong {
+  color: #00e58b; 
+}
+
+
+.logoutBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #aaa;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoutBtn:hover {
+  border-color: #ff4d4d;
+  color: #ff4d4d;
+  background-color: rgba(255, 77, 77, 0.1);
+}
+
+
+.loginBtn {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid #00e58b;
+  transition: all 0.2s ease;
+}
+
+.loginBtn:hover {
+  background-color: #00e58b;
+  color: #0b0f12;
+}
+
 
 @media (max-width: 640px) {
   .logo {

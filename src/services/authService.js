@@ -21,7 +21,6 @@ export const authService = {
   },
 
   async getProfile() {
-    // O interceptor do api.js já anexa o token Authorization automaticamente
     const response = await api.get("/auth/me");
     return response.data;
   },
