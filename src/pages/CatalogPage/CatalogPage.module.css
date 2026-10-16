@@ -1,61 +1,83 @@
 .container {
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 20px 40px 20px;
-}
-
-.card {
-  background: #121214;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 40px;
-  text-align: center;
-  max-width: 500px;
-  width: 100%;
-}
-
-.badge {
-  background: rgba(0, 229, 163, 0.1);
-  color: #00e5a3;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 20px;
-  letter-spacing: 1px;
-}
-
-.title {
-  color: #ffffff;
-  font-size: 2rem;
-  margin: 16px 0 8px 0;
+  box-sizing: border-box;
+  width: min(100% - 40px, 1280px);
+  min-height: 60vh;
+  margin: 0 auto;
+  padding: 112px 0 64px;
 }
 
 .breadcrumb {
-  color: #71717a;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 28px;
+  color: #9ca3af;
   font-size: 0.875rem;
-  margin-bottom: 24px;
 }
 
 .breadcrumb a {
-  color: #00e5a3;
+  color: #00e58b;
   text-decoration: none;
 }
 
-.infoBox {
-  background: #09090b;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 16px;
-  border-radius: 8px;
-  color: #a1a1aa;
-  font-size: 0.85rem;
+.breadcrumb a:hover {
+  text-decoration: underline;
 }
 
-.infoBox code {
-  display: block;
-  margin-top: 6px;
-  color: #00e5a3;
-  font-family: monospace;
+.catalogo {
+  width: 100%;
+}
+
+.cabecalho {
+  margin-bottom: 28px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid rgba(0, 229, 139, 0.25);
+  border-radius: 20px;
+  background: rgba(0, 229, 139, 0.08);
+  color: #00e58b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 12px 0 0;
+  color: #fff;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+}
+
+.erro {
+  padding: 32px 20px;
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  border-radius: 12px;
+  background: rgba(244, 63, 94, 0.08);
+  color: #fda4af;
+  text-align: center;
+}
+
+.erro p {
+  margin: 0 0 16px;
+}
+
+.botaoTentarNovamente {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #00e58b;
+  color: #0b0f12;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 28px, 1280px);
+    padding-top: 96px;
+  }
 }

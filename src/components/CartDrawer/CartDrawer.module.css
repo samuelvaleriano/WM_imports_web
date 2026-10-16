@@ -1,0 +1,518 @@
+.overlay {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(0, 0, 0, 0.68);
+  animation: fadeIn 180ms ease-out;
+}
+
+.drawer {
+  display: flex;
+  width: min(100%, 460px);
+  height: 100%;
+  flex-direction: column;
+  border-left: 1px solid rgba(0, 229, 139, 0.18);
+  background: #10171a;
+  box-shadow: -18px 0 55px rgba(0, 0, 0, 0.45);
+  animation: slideIn 220ms ease-out;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kicker {
+  margin: 0 0 5px;
+  color: #00e58b;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.title {
+  margin: 0;
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.title span {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.closeButton {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  border-color: rgba(0, 229, 139, 0.5);
+  color: #00e58b;
+}
+
+.items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 24px;
+}
+
+.shipping {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.shippingHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.shippingHeading h3 {
+  margin: 0;
+  color: #f9fafb;
+  font-size: 0.9rem;
+}
+
+.shippingHeading > span {
+  color: #849099;
+  font-size: 0.74rem;
+}
+
+.cepForm {
+  display: flex;
+  gap: 8px;
+}
+
+.cepInput {
+  min-width: 0;
+  height: 40px;
+  flex: 1;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.cepInput:focus {
+  border-color: #00e58b;
+  box-shadow: 0 0 0 3px rgba(0, 229, 139, 0.1);
+}
+
+.cepInput::placeholder {
+  color: #758089;
+}
+
+.cepButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 88px;
+  padding: 0 13px;
+  border: 1px solid rgba(0, 229, 139, 0.4);
+  border-radius: 8px;
+  background: rgba(0, 229, 139, 0.1);
+  color: #00e58b;
+  font-size: 0.82rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.cepButton:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.cepButton:hover {
+  background: rgba(0, 229, 139, 0.2);
+}
+
+.spinner {
+  animation: spin 800ms linear infinite;
+}
+
+.shippingLoading {
+  margin: 7px 0 0;
+  color: #b7c2c7;
+  font-size: 0.76rem;
+}
+
+.shippingError {
+  margin: 7px 0 0;
+  color: #fda4af;
+  font-size: 0.76rem;
+}
+
+.addressFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.addressField {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  color: #929da4;
+  font-size: 0.7rem;
+}
+
+.addressField input {
+  width: 100%;
+  height: 34px;
+  padding: 0 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.035);
+  color: #e5e7eb;
+  font: inherit;
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+}
+
+.addressField input::placeholder {
+  color: #65717a;
+}
+
+.options {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.shippingOption {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.shippingOption input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.shippingOption:focus-within {
+  outline: 2px solid #00e58b;
+  outline-offset: 2px;
+}
+
+.shippingOptionSelected {
+  border-color: rgba(0, 229, 139, 0.55);
+  background: rgba(0, 229, 139, 0.07);
+}
+
+.radioMark {
+  display: grid;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  place-items: center;
+  border: 1px solid #77828a;
+  border-radius: 50%;
+}
+
+.shippingOptionSelected .radioMark {
+  border-color: #00e58b;
+}
+
+.shippingOptionSelected .radioMark::after {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #00e58b;
+  content: '';
+}
+
+.optionDetails {
+  display: grid;
+  gap: 3px;
+  color: #f3f4f6;
+  font-size: 0.82rem;
+}
+
+.optionDetails small {
+  color: #929da4;
+  font-size: 0.71rem;
+}
+
+.optionPrice {
+  display: grid;
+  gap: 2px;
+  margin-left: auto;
+  color: #f3f4f6;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.optionPrice del {
+  color: #7d878e;
+  font-size: 0.7rem;
+}
+
+.optionPrice strong {
+  color: #00e58b;
+}
+
+.freeShipping {
+  margin-top: 12px;
+}
+
+.freeShippingText {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #b7c2c7;
+  font-size: 0.75rem;
+}
+
+.freeShippingText svg {
+  flex: 0 0 auto;
+  color: #00e58b;
+}
+
+.progressTrack {
+  height: 5px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #00b96b, #00ff9d);
+  transition: width 220ms ease;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.emptyState {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+}
+
+.emptyIcon {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 20px;
+  place-items: center;
+  border: 1px solid rgba(0, 229, 139, 0.25);
+  border-radius: 50%;
+  background: rgba(0, 229, 139, 0.08);
+  color: #00e58b;
+}
+
+.emptyState h3 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: 1.15rem;
+}
+
+.emptyState p {
+  max-width: 260px;
+  margin: 0 0 22px;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.continueButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 1px solid rgba(0, 229, 139, 0.5);
+  border-radius: 9px;
+  background: transparent;
+  color: #00e58b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.continueButton:hover {
+  background: rgba(0, 229, 139, 0.1);
+}
+
+.summary {
+  padding: 20px 24px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(7, 11, 13, 0.6);
+}
+
+.summaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+  color: #b8c0c5;
+  font-size: 0.9rem;
+}
+
+.summaryRow strong {
+  color: #f9fafb;
+  font-weight: 650;
+}
+
+.shippingValue {
+  color: #9ca3af;
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.grandTotal {
+  margin: 17px 0 0;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.grandTotal strong {
+  color: #00e58b;
+  font-size: 1.2rem;
+  font-weight: 850;
+}
+
+.shippingNote {
+  margin: 7px 0 16px;
+  color: #849099;
+  font-size: 0.75rem;
+}
+
+.checkoutButton {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: #00e58b;
+  color: #07100c;
+  font-size: 0.92rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.checkoutButton:hover {
+  transform: translateY(-1px);
+  background: #00ff9d;
+}
+
+.continueLink {
+  display: block;
+  margin: 13px auto 0;
+  padding: 4px 8px;
+  border: 0;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.continueLink:hover {
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(24px); }
+  to { transform: translateX(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+  .drawer {
+    width: 100%;
+    border-left: 0;
+  }
+
+  .header {
+    padding: 18px;
+  }
+
+  .items {
+    padding: 0 18px;
+  }
+
+  .shipping {
+    padding: 14px 18px;
+  }
+
+  .summary {
+    padding: 17px 18px calc(17px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .drawer {
+    animation: none;
+  }
+
+  .spinner {
+    animation-duration: 1.8s;
+  }
+}

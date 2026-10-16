@@ -4,7 +4,7 @@ import { TeamCategorySelector } from "../../components/TeamCategorySelector/Team
 import HeroBanner from "../../components/HeroBanner/HeroBanner.jsx";
 import { Header } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer.jsx";
-import ProductCard from "../../components/ProductCard/ProductCard.jsx";
+import ProductGrid from "../../components/ProductGrid/ProductGrid.jsx";
 import styles from "./HomePage.module.css";
 
 export default function HomePage() {
@@ -35,17 +35,13 @@ export default function HomePage() {
     return produto.categoria_slug === categoriaAtiva;
   });
 
-  if (loading) {
-    return <div className={styles.loading}>Carregando produtos...</div>;
-  }
-
   if (erro) {
     return <div className={styles.error}>{erro}</div>;
   }
 
   return (
     <main className={styles.container}>
-      <Header cartCount={0} />
+      <Header />
       <HeroBanner />
 
       <TeamCategorySelector 
@@ -55,33 +51,28 @@ export default function HomePage() {
 
       <section className={styles.sectionProdutos}>
         <h1 className={styles.title}>Lançamentos e Destaques</h1>
+        <ProductGrid
+          loading={loading}
+          produtos={produtosFiltrados.map((produto) => {
+            const precoAtual = Number(produto.preco);
+            const precoOriginal = produto.preco_original
+              ? Number(produto.preco_original)
+              : precoAtual * 1.25;
 
-        <div className={styles.grid}>
-          {produtosFiltrados.length > 0 ? (
-            produtosFiltrados.map((produto) => {
-              const precoAtual = Number(produto.preco);
-              const precoDe = produto.preco_original 
-                ? Number(produto.preco_original) 
-                : precoAtual * 1.25; 
-              return (
-                <ProductCard
-                  key={produto.id}
-                  produto={{
-                    id: produto.id,
-                    nome: produto.nome,
-                    time: produto.time_nome || produto.categoria_slug?.toUpperCase(),
-                    imagemUrl: produto.imagem_capa || produto.imagem,
-                    precoOriginal: precoDe,
-                    precoPromocional: precoAtual,
-                    desconto: produto.desconto
-                  }}
-                />
-              );
-            })
-          ) : (
-            <p className={styles.emptyState}>Nenhum produto encontrado para esta seleção.</p>
-          )}
-        </div>
+            return {
+              id: produto.id,
+              nome: produto.nome,
+              time: produto.time_nome || produto.categoria_slug?.toUpperCase(),
+              imagemUrl:
+                produto.imagem_capa || produto.imagem_url || produto.imagem,
+              variacoes: produto.variacoes,
+              precoOriginal,
+              precoPromocional: precoAtual,
+              desconto: produto.desconto,
+            };
+          })}
+          emptyMessage="Nenhum produto encontrado para esta seleção."
+        />
       </section>
       <Footer />
     </main>
