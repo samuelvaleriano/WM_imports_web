@@ -1,41 +1,53 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useCart } from '../../context/useCart.js';
 import styles from './ProductCard.module.css';
 
 export default function ProductCard({ produto }) {
   const navigate = useNavigate();
+  const { addToCart, openCart } = useCart();
   const [isFavorito, setIsFavorito] = useState(false);
 
   if (!produto) return null;
 
-  const {
-    id,
-    nome,
-    time,
-    imagemUrl,
-    precoOriginal,
-    precoPromocional,
-    desconto,
-    parcelas = 3,
-  } = produto;
+  const id = produto.id;
+  const nome = produto.nome || 'Camisa de futebol';
+  const time = produto.time || produto.time_nome;
+  const imagemUrl =
+    produto.imagemUrl ||
+    produto.imagem_url ||
+    produto.imagem_capa ||
+    produto.imagem;
+  const precoAtual = Number(
+    produto.precoPromocional ?? produto.preco ?? 0,
+  );
+  const precoOriginal = Number(
+    produto.precoOriginal ?? produto.preco_original,
+  );
+  const descontoInformado = Number(produto.desconto) || 0;
+  const parcelas = Number(produto.parcelas) || 3;
 
   const formatarPreco = (valor) => {
-    if (typeof valor !== 'number') return 'R$ 0,00';
+    if (!Number.isFinite(valor)) return 'R$ 0,00';
     return valor.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     });
   };
 
-  const temDesconto = precoOriginal && precoOriginal > precoPromocional;
+  const temDesconto =
+    Number.isFinite(precoOriginal) &&
+    precoOriginal > 0 &&
+    precoOriginal > precoAtual;
 
   const porcentagemDesconto =
-    desconto ||
+    descontoInformado ||
     (temDesconto
-      ? Math.round(((precoOriginal - precoPromocional) / precoOriginal) * 100)
+      ? Math.round(((precoOriginal - precoAtual) / precoOriginal) * 100)
       : 0);
 
-  const valorParcela = precoPromocional ? precoPromocional / parcelas : 0;
+  const valorParcela = precoAtual > 0 ? precoAtual / parcelas : 0;
 
   const handleCardClick = () => {
     navigate(`/produto/${id}`);
@@ -46,21 +58,50 @@ export default function ProductCard({ produto }) {
     setIsFavorito((prev) => !prev);
   };
 
+  const handleBuyClick = (event) => {
+    event.stopPropagation();
+
+    const variacoes = Array.isArray(produto.variacoes) ? produto.variacoes : [];
+    const variacaoDisponivel = variacoes.find(
+      (variacao) =>
+        variacao.estoque === undefined || Number(variacao.estoque) > 0,
+    );
+
+    if (variacoes.length > 0 && !variacaoDisponivel) {
+      toast.error('Este produto está sem estoque no momento.');
+      return;
+    }
+
+    try {
+      addToCart(
+        {
+          ...produto,
+          imagemUrl,
+          preco: precoAtual,
+        },
+        variacaoDisponivel?.tamanho || produto.tamanho || 'Único',
+      );
+      openCart();
+    } catch (error) {
+      console.error('Não foi possível adicionar o produto ao carrinho:', error);
+      toast.error(error.message || 'Não foi possível adicionar ao carrinho.');
+    }
+  };
+
   return (
     <article className={styles.card} onClick={handleCardClick}>
-      {/* BADGE DE DESCONTO */}
       {porcentagemDesconto > 0 && (
         <span className={styles.badgeDesconto}>
           -{porcentagemDesconto}% OFF
         </span>
       )}
 
-      {/* BOTÃO FAVORITO */}
       <button
         type="button"
         className={`${styles.btnFavorito} ${isFavorito ? styles.favoritado : ''}`}
         onClick={handleFavoritoClick}
-        aria-label="Adicionar aos favoritos"
+        aria-label={isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+        aria-pressed={isFavorito}
       >
         <svg
           viewBox="0 0 24 24"
@@ -74,17 +115,19 @@ export default function ProductCard({ produto }) {
         </svg>
       </button>
 
-      {/* CONTAINER DA IMAGEM */}
       <div className={styles.imagemContainer}>
-        <img
-          src={imagemUrl}
-          alt={nome}
-          className={styles.imagem}
-          loading="lazy"
-        />
+        {imagemUrl ? (
+          <img
+            src={imagemUrl}
+            alt={nome}
+            className={styles.imagem}
+            loading="lazy"
+          />
+        ) : (
+          <span className={styles.imagemAusente}>Imagem indisponível</span>
+        )}
       </div>
 
-      {/* DETALHES DO PRODUTO */}
       <div className={styles.infoContainer}>
         {time && <span className={styles.nomeTime}>{time}</span>}
 
@@ -99,7 +142,7 @@ export default function ProductCard({ produto }) {
             </span>
           )}
           <span className={styles.precoPromocional}>
-            {formatarPreco(precoPromocional)}
+            {formatarPreco(precoAtual)}
           </span>
         </div>
 
@@ -112,10 +155,7 @@ export default function ProductCard({ produto }) {
         <button
           type="button"
           className={styles.btnComprar}
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/produto/${id}`);
-          }}
+          onClick={handleBuyClick}
         >
           COMPRAR
         </button>
