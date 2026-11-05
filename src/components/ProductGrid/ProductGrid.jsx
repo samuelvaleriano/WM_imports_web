@@ -5,6 +5,10 @@ export default function ProductGrid({
   produtos = [],
   loading = false,
   emptyMessage = 'Nenhum produto encontrado.',
+  isAdmin = false,
+  onUpdateProduct,
+  onDeleteProduct,
+  onUploadProductImage,
 }) {
   if (loading) {
     return (
@@ -38,7 +42,14 @@ export default function ProductGrid({
   return (
     <div className={styles.grid} aria-label="Lista de produtos">
       {produtos.map((produto) => (
-        <ProductCard key={produto.id} produto={produto} />
+        <ProductCard
+          key={produto.id}
+          produto={produto}
+          isAdmin={isAdmin}
+          onUpdateProduct={onUpdateProduct}
+          onDeleteProduct={onDeleteProduct}
+          onUploadProductImage={onUploadProductImage}
+        />
       ))}
     </div>
   );

@@ -69,6 +69,59 @@
   transform: scale(1.1);
 }
 
+.adminActions {
+  position: absolute;
+  top: 52px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  gap: 6px;
+}
+
+.adminActions button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  background: rgba(11, 15, 18, 0.85);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.adminActions button:hover {
+  color: #00e58b;
+  border-color: #00e58b;
+}
+
+.editOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.editForm {
+  width: min(420px, 100%);
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+  border: 1px solid rgba(0, 229, 139, 0.3);
+  border-radius: 14px;
+  background: #0f171a;
+  color: #ffffff;
+}
+
+.editForm h3 { margin: 0 0 4px; }
+.editForm label { display: grid; gap: 5px; color: #94a3b8; font-size: .82rem; font-weight: 700; }
+.editForm input { width: 100%; box-sizing: border-box; }
+.editCalculatedPrice { margin: 0; color: #00e58b; font-size: 1rem; font-weight: 800; }
+.editButtons { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
+.editButtons button { border: 0; border-radius: 7px; padding: 10px 14px; cursor: pointer; font-weight: 700; }
+.editButtons button:last-child { background: #00e58b; color: #0b0f12; }
+
 .favoritado {
   color: #e11d48 !important;
   background: rgba(225, 29, 72, 0.15);

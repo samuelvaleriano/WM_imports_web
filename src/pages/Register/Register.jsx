@@ -57,8 +57,9 @@ export function Register({ onSuccess, onNavigateToLogin }) {
 
     setLoading(true);
     try {
-      await authService.register(formData.nome, formData.email, formData.senha);
-      await authService.login(formData.email, formData.senha);
+      const email = formData.email.trim().toLowerCase();
+      await authService.register(formData.nome, email, formData.senha);
+      await authService.login(email, formData.senha);
       
       if (onSuccess) {
         onSuccess();

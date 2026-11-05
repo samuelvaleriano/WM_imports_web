@@ -52,7 +52,11 @@ export function Login({ onSuccess, onNavigateToRegister }) {
       };
       const returnedRole = userData.role || response?.role;
       const isLojista = returnedRole === "admin" || returnedRole === "lojista";
-      const isUsuario = returnedRole === "customer" || returnedRole === "user" || returnedRole === "usuario";
+      const isUsuario =
+        returnedRole === "cliente" ||
+        returnedRole === "customer" ||
+        returnedRole === "user" ||
+        returnedRole === "usuario";
       const profileMatches =
         (perfil === "lojista" && isLojista) ||
         (perfil === "customer" && isUsuario);

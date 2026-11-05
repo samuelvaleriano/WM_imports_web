@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getHeroBanner } from '../../services/adminService.js';
 import styles from './HeroBanner.module.css';
 
 const SLIDES = [
@@ -35,7 +36,85 @@ const SLIDES = [
 export default function HeroBanner() {
   const [indexAtual, setIndexAtual] = useState(0);
   const [isPausado, setIsPausado] = useState(false);
+  const [slides, setSlides] = useState(SLIDES);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let active = true;
+    getHeroBanner()
+      .then((config) => {
+        if (!active || !config) return;
+        const remoteSlides = config.campanhas || config.campaigns || config.slides;
+        if (Array.isArray(remoteSlides) && remoteSlides.length) {
+          setSlides((current) =>
+            remoteSlides.map((remoteSlide, index) => ({
+              ...(current[index] || current[0]),
+              ...remoteSlide,
+              id: remoteSlide.id || index + 1,
+              imagem:
+                remoteSlide.imagem_url ||
+                remoteSlide.imagem ||
+                remoteSlide.imagemUrl ||
+                current[index]?.imagem ||
+                current[0].imagem,
+              tagDesconto:
+                remoteSlide.frase_promocional ||
+                remoteSlide.tag_desconto ||
+                remoteSlide.frasePromocional ||
+                current[index]?.tagDesconto ||
+                '',
+              badge: remoteSlide.badge || remoteSlide.selo || current[index]?.badge,
+              titulo:
+                remoteSlide.titulo ||
+                remoteSlide.titulo_principal ||
+                current[index]?.titulo,
+              subtitulo:
+                remoteSlide.subtitulo ||
+                remoteSlide.descricao ||
+                current[index]?.subtitulo,
+              link:
+                remoteSlide.link ||
+                remoteSlide.url ||
+                current[index]?.link,
+              textoBotao:
+                remoteSlide.texto_botao ||
+                remoteSlide.botao ||
+                current[index]?.textoBotao ||
+                'APROVEITAR AGORA',
+            })),
+          );
+          return;
+        }
+        setSlides((current) =>
+          current.map((slide, index) =>
+            index === 0
+              ? {
+                  ...slide,
+                  imagem: config.imagem_url || config.imagem || slide.imagem,
+                  tagDesconto:
+                    config.frase_promocional ||
+                    config.tag_desconto ||
+                    slide.tagDesconto,
+                  badge: config.badge || config.selo || slide.badge,
+                  titulo: config.titulo || config.titulo_principal || slide.titulo,
+                  subtitulo: config.subtitulo || config.descricao || slide.subtitulo,
+                  link: config.link || config.url || slide.link,
+                  textoBotao:
+                    config.texto_botao || config.botao || slide.textoBotao,
+                }
+              : slide,
+          ),
+        );
+      })
+      .catch((error) => {
+        if (error.response?.status !== 404) {
+          console.error('Erro ao carregar configuração do banner:', error);
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Alterna o slide automaticamente (e reseta o timer quando indexAtual muda)
   useEffect(() => {
@@ -43,12 +122,12 @@ export default function HeroBanner() {
 
     const intervalo = setInterval(() => {
       setIndexAtual((prevIndex) =>
-        prevIndex === SLIDES.length - 1 ? 0 : prevIndex + 1
+        prevIndex === slides.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
 
     return () => clearInterval(intervalo);
-  }, [indexAtual, isPausado]);
+  }, [indexAtual, isPausado, slides.length]);
 
   const handleSlideChange = (novoIndex) => {
     setIndexAtual(novoIndex);
@@ -59,7 +138,7 @@ export default function HeroBanner() {
     if (link.startsWith('/')) {
       navigate(link);
     } else {
-      window.location.href = link;
+      window.open(link, '_self');
     }
   };
 
@@ -69,7 +148,7 @@ export default function HeroBanner() {
       onMouseEnter={() => setIsPausado(true)}
       onMouseLeave={() => setIsPausado(false)}
     >
-      {SLIDES.map((slide, index) => {
+      {slides.map((slide, index) => {
         const isAtivo = index === indexAtual;
 
         return (
@@ -95,7 +174,7 @@ export default function HeroBanner() {
                 className={styles.botao}
                 onClick={(e) => handleActionClick(e, slide.link)}
               >
-                APROVEITAR AGORA
+                {slide.textoBotao || 'APROVEITAR AGORA'}
               </a>
             </div>
 
@@ -106,7 +185,7 @@ export default function HeroBanner() {
 
       {/* INDICADORES (Navegação por Pílula) */}
       <div className={styles.indicadores}>
-        {SLIDES.map((_, index) => (
+        {slides.map((_, index) => (
           <button
             key={index}
             type="button"
