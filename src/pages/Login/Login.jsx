@@ -14,6 +14,7 @@ export function Login({ onSuccess, onNavigateToRegister }) {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [perfil, setPerfil] = useState("customer");
 
   const from = location.state?.from?.pathname || "/";
 
@@ -49,15 +50,29 @@ export function Login({ onSuccess, onNavigateToRegister }) {
         email: formData.email,
         nome: response?.nome || formData.email.split("@")[0]
       };
+      const returnedRole = userData.role || response?.role;
+      const isLojista = returnedRole === "admin" || returnedRole === "lojista";
+      const isUsuario = returnedRole === "customer" || returnedRole === "user" || returnedRole === "usuario";
+      const profileMatches =
+        (perfil === "lojista" && isLojista) ||
+        (perfil === "customer" && isUsuario);
 
       if (jwtToken) {
+        if (!profileMatches) {
+          setApiError(
+            returnedRole
+              ? "Este acesso não pertence ao perfil selecionado."
+              : "A API não informou o perfil desta conta."
+          );
+          return;
+        }
 
-        login(userData, jwtToken);
+        login({ ...userData, role: isLojista ? "admin" : "customer" }, jwtToken);
 
         if (onSuccess) {
           onSuccess();
         } else {
-          navigate(from, { replace: true });
+          navigate(perfil === "lojista" ? "/admin" : from, { replace: true });
         }
       } else {
         setApiError("Não foi possível recuperar o token de acesso da API.");
@@ -88,6 +103,47 @@ export function Login({ onSuccess, onNavigateToRegister }) {
           </h1>
           <p className={styles.subtitle}>Acesse sua conta para continuar</p>
         </div>
+
+        <div className={styles.profileSelector} aria-label="Selecione o perfil de acesso">
+          <div
+            className={`${styles.profileIndicator} ${
+              perfil === "lojista" ? styles.profileIndicatorRight : ""
+            }`}
+            aria-hidden="true"
+          />
+          <button
+            type="button"
+            className={`${styles.profileOption} ${
+              perfil === "customer" ? styles.profileOptionActive : ""
+            }`}
+            onClick={() => {
+              setPerfil("customer");
+              setApiError("");
+            }}
+            aria-pressed={perfil === "customer"}
+          >
+            Usuário
+          </button>
+          <button
+            type="button"
+            className={`${styles.profileOption} ${
+              perfil === "lojista" ? styles.profileOptionActive : ""
+            }`}
+            onClick={() => {
+              setPerfil("lojista");
+              setApiError("");
+            }}
+            aria-pressed={perfil === "lojista"}
+          >
+            Lojista
+          </button>
+        </div>
+
+        <p className={styles.profileHint}>
+          {perfil === "lojista"
+            ? "Acesse o painel de gestão da loja."
+            : "Entre para acompanhar seus pedidos."}
+        </p>
 
         {apiError && <div className={styles.alertError}>{apiError}</div>}
 
@@ -130,14 +186,22 @@ export function Login({ onSuccess, onNavigateToRegister }) {
         </form>
 
         <div className={styles.footer}>
-          <span>Ainda não tem conta?</span>
-          <button
-            type="button"
-            onClick={handleGoToRegister}
-            className={styles.linkBtn}
-          >
-            Cadastrar-se
-          </button>
+          {perfil === "customer" ? (
+            <>
+              <span>Ainda não tem conta?</span>
+              <button
+                type="button"
+                onClick={handleGoToRegister}
+                className={styles.linkBtn}
+              >
+                Cadastrar-se
+              </button>
+            </>
+          ) : (
+            <span className={styles.sellerNotice}>
+              Novos lojistas são cadastrados pelo painel administrativo.
+            </span>
+          )}
         </div>
       </div>
     </div>

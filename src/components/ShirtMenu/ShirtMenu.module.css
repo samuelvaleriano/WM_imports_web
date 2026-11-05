@@ -133,9 +133,23 @@
 }
 
 .homeLink:hover,
-.mainCategoryBtn:hover {
+.mainCategoryBtn:hover,
+.adminLink:hover {
   transform: translateX(6px) scale(1.02);
   color: #00e5a3;
+}
+
+.adminLink {
+  color: #00e5a3;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 900;
+  font-family: system-ui, -apple-system, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.95), 0 0 12px rgba(0, 0, 0, 0.8);
+  transition: transform 0.2s ease, color 0.2s ease;
+  line-height: 1.1;
 }
 
 .menuGroup {

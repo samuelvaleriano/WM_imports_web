@@ -46,6 +46,61 @@
   margin-top: 6px;
 }
 
+.profileSelector {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  width: 100%;
+  padding: 4px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(0, 229, 139, 0.2);
+  border-radius: 14px;
+  background: #121b18;
+}
+
+.profileIndicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 6px);
+  border-radius: 10px;
+  background: #00e58b;
+  box-shadow: 0 3px 12px rgba(0, 229, 139, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.profileIndicatorRight {
+  transform: translateX(100%);
+}
+
+.profileOption {
+  position: relative;
+  z-index: 1;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #94a3b8;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.profileOptionActive {
+  color: #0b0f12;
+}
+
+.profileHint {
+  min-height: 20px;
+  margin: 0 0 20px;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
 .alertError {
   background: rgba(239, 68, 68, 0.15);
   border: 1px solid rgba(239, 68, 68, 0.4);
@@ -158,6 +213,12 @@
 
 .linkBtn:hover {
   color: #00ff9d;
+}
+
+.sellerNotice {
+  color: #94a3b8;
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
 .spinner {

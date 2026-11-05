@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import styles from "./ShirtMenu.module.css";
 
 const MENU_ESTRUTURA = [
@@ -172,6 +173,9 @@ export default function ShirtMenu() {
   const [subcategoriaAtiva, setSubcategoriaAtiva] = useState(null);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
+  const isLojista =
+    isAuthenticated && (user?.role === "admin" || user?.role === "lojista");
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
@@ -281,6 +285,16 @@ export default function ShirtMenu() {
                 <Link to="/" onClick={fecharMenu} className={styles.homeLink}>
                   INÍCIO
                 </Link>
+
+                {isLojista && (
+                  <Link
+                    to="/admin"
+                    onClick={fecharMenu}
+                    className={styles.adminLink}
+                  >
+                    PAINEL DO LOJISTA
+                  </Link>
+                )}
 
                 {MENU_ESTRUTURA.map((item, index) => {
                   const temSub = item.subcategorias && item.subcategorias.length > 0;
