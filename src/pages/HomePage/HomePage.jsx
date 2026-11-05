@@ -5,6 +5,9 @@ import HeroBanner from "../../components/HeroBanner/HeroBanner.jsx";
 import { Header } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer.jsx";
 import ProductGrid from "../../components/ProductGrid/ProductGrid.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { deleteProduct, updateProduct, uploadProductImage } from "../../services/adminService.js";
+import { toast } from "react-toastify";
 import styles from "./HomePage.module.css";
 
 export default function HomePage() {
@@ -12,6 +15,8 @@ export default function HomePage() {
   const [categoriaAtiva, setCategoriaAtiva] = useState("todas");
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
+  const { user, isAuthenticated } = useAuth();
+  const isAdmin = isAuthenticated && user?.role === "admin";
 
   useEffect(() => {
     async function carregarProdutos() {
@@ -28,6 +33,33 @@ export default function HomePage() {
 
     carregarProdutos();
   }, []);
+
+  const handleUpdateProduct = async (productId, data) => {
+    try {
+      const updated = await updateProduct(productId, data);
+      setProdutos((current) =>
+        current.map((product) =>
+          product.id === productId ? { ...product, ...updated } : product,
+        ),
+      );
+      toast.success("Produto atualizado com sucesso.");
+    } catch (error) {
+      console.error("Erro ao atualizar produto:", error);
+      toast.error(error.response?.data?.detail || "Não foi possível atualizar o produto.");
+      throw error;
+    }
+  };
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await deleteProduct(productId);
+      setProdutos((current) => current.filter((product) => product.id !== productId));
+      toast.success("Produto excluído com sucesso.");
+    } catch (error) {
+      console.error("Erro ao excluir produto:", error);
+      toast.error(error.response?.data?.detail || "Não foi possível excluir o produto.");
+    }
+  };
 
 
   const produtosFiltrados = produtos.filter((produto) => {
@@ -54,10 +86,17 @@ export default function HomePage() {
         <ProductGrid
           loading={loading}
           produtos={produtosFiltrados.map((produto) => {
-            const precoAtual = Number(produto.preco);
-            const precoOriginal = produto.preco_original
-              ? Number(produto.preco_original)
-              : precoAtual * 1.25;
+            const desconto = Number(
+              produto.desconto_percentual ??
+                produto.desconto ??
+                produto.percentual_desconto ??
+                0,
+            );
+            const precoOriginal = Number(produto.preco) || 0;
+            const precoAtual =
+              desconto > 0 && desconto < 100
+                ? precoOriginal * (1 - desconto / 100)
+                : precoOriginal;
 
             return {
               id: produto.id,
@@ -68,9 +107,18 @@ export default function HomePage() {
               variacoes: produto.variacoes,
               precoOriginal,
               precoPromocional: precoAtual,
-              desconto: produto.desconto,
+              desconto,
+              desconto_percentual: desconto,
+              preco: precoAtual,
+              preco_original: precoOriginal,
+              imagem_url: produto.imagem_url,
+              imagem_capa: produto.imagem_capa,
             };
           })}
+          isAdmin={isAdmin}
+          onUpdateProduct={handleUpdateProduct}
+          onDeleteProduct={handleDeleteProduct}
+          onUploadProductImage={uploadProductImage}
           emptyMessage="Nenhum produto encontrado para esta seleção."
         />
       </section>

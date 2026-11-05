@@ -7,6 +7,7 @@ import CatalogPage from '../pages/CatalogPage/CatalogPage.jsx';
 import { Login } from '../pages/Login/Login.jsx';
 import { Register } from '../pages/Register/Register.jsx';
 import AdminDashboard from '../pages/AdminDashboard/AdminDashboard.jsx';
+import BannerEditor from '../pages/BannerEditor/BannerEditor.jsx';
 
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.jsx';
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/produtos/editar/:id",
         element: <CreatePage />,
+      },
+      {
+        path: "/admin/banner",
+        element: <BannerEditor />,
       },
       {
         path: "/admin/pedidos",

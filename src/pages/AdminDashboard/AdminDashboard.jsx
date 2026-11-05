@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FiAlertCircle,
   FiBox,
@@ -9,6 +10,7 @@ import {
   FiShoppingBag,
   FiTruck,
   FiUserPlus,
+  FiPlus,
 } from "react-icons/fi";
 import { toast } from "react-toastify";
 import Header from "../../components/Header/Header.jsx";
@@ -99,6 +101,7 @@ export default function AdminDashboard() {
     return () => clearTimeout(timer);
   }, [loadDashboard]);
 
+
   const filteredOrders = useMemo(() => {
     if (statusFilter === "all") return stats.orders;
     return stats.orders.filter(
@@ -167,6 +170,7 @@ export default function AdminDashboard() {
       setCreatingLojista(false);
     }
   };
+
 
   return (
     <main className={styles.page}>
@@ -243,6 +247,26 @@ export default function AdminDashboard() {
             </button>
           </form>
         </section>
+
+        <div className={styles.productAction}>
+          <div>
+            <h2>Produtos</h2>
+            <p>Cadastre camisas, imagens e estoque pelo formulário dedicado.</p>
+          </div>
+          <Link to="/admin/produtos/novo" className={styles.productActionButton}>
+            <FiPlus size={18} /> Novo produto
+          </Link>
+        </div>
+
+        <div className={styles.productAction}>
+          <div>
+            <h2>Campanha principal</h2>
+            <p>Visualize e altere a imagem e a frase do Hero Banner.</p>
+          </div>
+          <Link to="/admin/banner" className={styles.productActionButton}>
+            Editar banner
+          </Link>
+        </div>
 
         <section className={styles.ordersSection}>
           <div className={styles.sectionHeader}>

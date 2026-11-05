@@ -37,6 +37,7 @@ export const AuthProvider = ({children}) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('wm_imports_token');
+    localStorage.removeItem('@WMImports:token');
     localStorage.removeItem('wm_imports_user');
   };
 

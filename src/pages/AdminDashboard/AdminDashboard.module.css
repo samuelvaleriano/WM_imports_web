@@ -27,6 +27,14 @@ h1 { font-size: clamp(1.7rem, 3vw, 2.4rem); margin: 0; }
 .userForm input:focus { border-color: var(--color-primary); outline: none; }
 .createUserButton { background: var(--color-primary); border: 0; border-radius: 7px; color: #0b0f12; cursor: pointer; font-weight: 800; padding: 11px 15px; white-space: nowrap; }
 .createUserButton:disabled { cursor: wait; opacity: .65; }
+.productAction { display: flex; align-items: center; justify-content: space-between; gap: 20px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+.productAction h2 { font-size: 1.2rem; margin: 0; }
+.productAction p { color: var(--text-secondary); margin-top: 6px; }
+.productActionButton { align-items: center; background: var(--color-primary); border-radius: 7px; color: #0b0f12; display: inline-flex; font-weight: 800; gap: 7px; padding: 11px 15px; text-decoration: none; white-space: nowrap; }
+.bannerSection { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+.bannerForm { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: 14px; margin-top: 24px; }
+.bannerForm label { color: var(--text-secondary); display: flex; flex-direction: column; font-size: .8rem; font-weight: 700; gap: 6px; }
+.bannerForm input { background: #101a18; border: 1px solid rgba(255,255,255,.15); border-radius: 6px; color: var(--text-primary); padding: 10px; }
 .sectionHeader h2 { font-size: 1.3rem; }
 .filter { color: var(--text-secondary); font-size: .8rem; font-weight: 700; }
 .filter span { display: block; margin-bottom: 6px; }
@@ -61,5 +69,9 @@ td { color: #e5e7eb; font-size: .9rem; }
   .userSection { padding: 18px 14px; }
   .userForm { grid-template-columns: 1fr; }
   .createUserButton { width: 100%; }
+  .productAction { align-items: stretch; flex-direction: column; padding: 18px 14px; }
+  .productActionButton { justify-content: center; }
+  .bannerSection { padding: 18px 14px; }
+  .bannerForm { grid-template-columns: 1fr; }
   .filter, .filter select { width: 100%; }
 }
