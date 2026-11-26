@@ -21,7 +21,18 @@ A **WM_Imports** busca democratizar e automatizar o acesso à compra de vestuár
 * **👕 Menu Hambúrguer Temático (`MobileShirtMenu`):** Menu lateral mobile com textura e estampa visual de camisa de time no plano de fundo.
 * **🏆 Seletor Dinâmico por Categoria de Times (`TeamCategorySelector`):** Filtro em tempo real para Seleções, Nacionais e Internacionais com navegação por brasões.
 * **🛒 Carrinho de Compras Lateral (`CartDrawer`):** Abertura sem redirecionamento de tela, controle de quantidades, inserção de cupom e simulação de frete via API do ViaCEP.
+* **💳 Checkout Mercado Pago:** Pagamento por PIX com QR Code e consulta automática de status, ou cartão por Payment Brick seguro.
 * **📊 Dashboard Administrativo:** Painel restrito para o lojista acompanhar métricas de vendas, gerenciar estoque por tamanho (P, M, G, GG) e alterar banners da loja.
+
+### Checkout Mercado Pago
+
+1. Instale as dependências com `npm install`.
+2. Crie um `.env.local` na raiz do frontend com `VITE_API_URL=http://127.0.0.1:8000/api/v1` e `VITE_MP_PUBLIC_KEY=TEST-...` (use a chave pública de teste do Mercado Pago).
+3. Inicie o frontend e a API. O checkout exige login, um frete selecionado no carrinho e itens com variação cadastrada.
+
+O frontend envia os itens como `variacao_id` e `quantidade`, usa `/pagamentos/pix` e `/pagamentos/cartao`, e consulta `/pagamentos/{payment_id}/status` a cada 5 segundos enquanto o pagamento estiver pendente. Os dados brutos do cartão permanecem no Payment Brick; somente o token gerado é enviado à API. Configure as credenciais privadas do Mercado Pago apenas no backend.
+
+As rotas atuais da API não recebem o custo do frete. Para evitar que o checkout exiba um total diferente do valor calculado pelo backend, o frontend bloqueia o pagamento quando o frete selecionado tem custo; pagamentos com frete grátis continuam disponíveis.
 
 
 ---

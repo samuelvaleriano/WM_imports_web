@@ -8,6 +8,7 @@ import { Login } from '../pages/Login/Login.jsx';
 import { Register } from '../pages/Register/Register.jsx';
 import AdminDashboard from '../pages/AdminDashboard/AdminDashboard.jsx';
 import BannerEditor from '../pages/BannerEditor/BannerEditor.jsx';
+import CheckoutPage, { CheckoutSuccessPage } from '../pages/CheckoutPage/CheckoutPage.jsx';
 
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.jsx';
@@ -66,7 +67,15 @@ const router = createBrowserRouter([
     path: "/checkout",
     element: (
       <ProtectedRoute>
-        <HomePage />
+        <CheckoutPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/checkout/sucesso",
+    element: (
+      <ProtectedRoute>
+        <CheckoutSuccessPage />
       </ProtectedRoute>
     ),
   },

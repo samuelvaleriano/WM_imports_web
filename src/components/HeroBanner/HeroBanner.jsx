@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getHeroBanner } from '../../services/adminService.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import styles from './HeroBanner.module.css';
 
 const SLIDES = [
@@ -38,8 +39,11 @@ export default function HeroBanner() {
   const [isPausado, setIsPausado] = useState(false);
   const [slides, setSlides] = useState(SLIDES);
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
+    if (!isAuthenticated || user?.role !== 'admin') return undefined;
+
     let active = true;
     getHeroBanner()
       .then((config) => {
@@ -114,7 +118,7 @@ export default function HeroBanner() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [isAuthenticated, user?.role]);
 
   // Alterna o slide automaticamente (e reseta o timer quando indexAtual muda)
   useEffect(() => {
