@@ -103,6 +103,12 @@ export function CartProvider({ children }) {
       produto.imagem_url ||
       produto.imagem_capa ||
       produto.imagem;
+    const variacao = Array.isArray(produto.variacoes)
+      ? produto.variacoes.find(
+          (item) => String(item.tamanho) === tamanhoSelecionado,
+        )
+      : null;
+    const variacaoId = variacao?.id ?? variacao?.variacao_id;
 
     setCart((currentCart) => {
       const existingItem = currentCart.find((item) =>
@@ -111,7 +117,11 @@ export function CartProvider({ children }) {
       if (existingItem) {
         return currentCart.map((item) =>
           sameCartItem(item, produto.id, tamanhoSelecionado)
-            ? { ...item, quantidade: item.quantidade + 1 }
+            ? {
+                ...item,
+                variacaoId: item.variacaoId ?? variacaoId,
+                quantidade: item.quantidade + 1,
+              }
             : item,
         );
       }
@@ -124,6 +134,7 @@ export function CartProvider({ children }) {
           nome: produto.nome || 'Camisa de futebol',
           imagemUrl,
           tamanho: tamanhoSelecionado,
+          variacaoId,
           preco,
           quantidade: 1,
         },
